@@ -138,3 +138,99 @@ mr = new questionConfig()
 console.log({} instanceof Array)
 console.log([] instanceof Object)
 console.log('aa'.toString())
+
+
+
+
+__Coupon = () ->
+
+
+
+    this.prototype = {
+
+        setConfig: (callback) ->
+            rl = readline.createInterface {
+                input: process.stdin,
+                output: process.stdout
+            }
+
+            rl.question '(mio ID)? ', (mioID) ->
+                rl.question '(IIJ password)? ', (mioPass) ->
+                    rl.question '(IIJ developers ID)? ', (mioDevID) ->
+                        rl.question '(redirect URI)? ', (redirectTo) ->
+                            rl.close()
+                            input =
+                                mioID: mioID
+                                mioPass: mioPass
+                                mioDevID: mioDevID
+                                redirectTo: redirectTo
+                            ws = fs.createWriteStream CONF_PATH
+                                .on 'close', ->
+                                    config = input
+                                    if (typeof callback) is 'function' then callback input
+                            ws.write JSON.stringify input
+                            ws.end()
+
+
+        # read OAuth info from file.
+        # cakkabck takes 1 argument of JSON.parsed OAuth info.
+        readConfig: (callback) ->
+            data = ''
+            fs.createReadStream CONF_PATH
+                .on 'error', (err) ->
+                    if err.code is 'ENOENT'
+                        console.log 'config file not found.'
+                .on 'data', (chunk) ->
+                    data += chunk
+                .on 'end', () ->
+                    output = JSON.parse data
+                    config = output
+                    if (typeof callback) is 'function' then callback output
+
+        readAccessToken: (callback) ->
+            data = ''
+            that = this
+            fs.createReadStream TOKEN_PATH
+                .on 'error', (err) ->
+                    if err.code is 'ENOENT'
+                        console.log 'Access token not found.'
+                .on 'data', (chunk) ->
+                    data += chunk
+                .on 'end', () ->
+                    tokens = JSON.parse data
+                    if (typeof callback) is 'function' then callback tokens
+
+        turn: ({client_id, access_token, couponUse, filter, success}) =>
+            callback = utility.callback
+            unless client_id && access_token
+                throw new Error 'no access_token specified'
+            request = require 'request'
+            filter = this.utility.arraify filter
+            this.inform {
+                client_id,
+                access_token,
+                success: (information) ->
+                    query = utility.querify {
+                        information
+                        couponUse
+                        filter
+                    }
+                    request {
+                        url: this.urls.endpoint
+                        method: 'PUT'
+                        headers:
+                            'X-IIJmio-Developer': client_id
+                            'X-IIJmio-Authorization': access_token
+                            'Content-Type': 'application/json'
+                        json: query
+                    }
+                    ,(err, res, body) ->
+                        if res.statusCode is 200
+                                callback success
+                        else
+                            throw new Error "http error: #{res.statusCode}"
+            }
+
+
+
+    }

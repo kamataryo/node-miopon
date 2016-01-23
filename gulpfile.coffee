@@ -5,7 +5,7 @@ mocha     = require 'gulp-mocha'
 # webserver = require 'gulp-webserver'
 
 gulp.task 'coffee', ->
-    gulp.src 'coffee/*.coffee'
+    gulp.src './miopon.coffee'
         .pipe plumber()
         .pipe coffee {
             bare: false
@@ -22,18 +22,22 @@ gulp.task 'coffee', ->
 #     }
 
 
-gulp.task 'mocha', ->
-    gulp.src 'mocha/miopon.mocha.coffee'
+gulp.task 'mocha',['coffee'], ->
+    gulp.src [
+        './test/miopon.mocha.coffee'
+    ]
         .pipe mocha {
             compilers: 'coffee-script'
             reporter: 'nyan'
         }
 
 
+
 gulp.task 'watch', ->
     gulp.watch [
-        'coffee/*.coffee'
-        'mocha/*.coffee'
+        './miopon.coffee'
+        './test/*.coffee'
+        './test/cases/*.json'
     ]
     , [
         'coffee'

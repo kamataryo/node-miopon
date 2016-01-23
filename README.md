@@ -1,0 +1,74 @@
+# node-miopon
+miopon API wrapper for nodejs.
+
+## install
+`npm install node-miopon`
+
+## usage
+`miopon = require 'miopon'`
+
+`coupon = new miopon.Coupon`
+
+`utility = miopon.utility`
+
+
+### turn the coupon of number '09000000000' on
+    client_id = 'xxxxxxxxxxxxxxxxxxx'
+    access_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'        
+    coupon = new Coupon()
+
+    # request all the phone number list at first
+    coupon.inform {
+        client_id
+        access_token
+        success: ({information}) ->
+
+            # filter and create query
+            query = utility.querify {
+                information
+                couponUse: 'on'
+                filter: '09000000000'
+            }
+
+            # request to turn the coupon on
+            coupon.turn {
+                client_id
+                access_token
+                query
+                success: ->
+                    console.log 'success!'
+                failure: (err) ->
+                    console.log err
+            }
+    }
+
+
+
+
+## API
+
+### oAuth
+
+- `coupon.oAuth` takes `{ mioID, mioPass, client_id, redirect_uri, success, failure }`.
+- callback `success` will be called with `{client_id, access_token, expires_in}`.
+- callback `failure`  will be called with a `error object`.
+
+### inform
+
+- `coupon.inform` takes `{client_id, access_token, success, failure}`.
+- callback `success` will be called with `{information}`.
+- callback `failure`  will be called with a `error object`.
+
+### turn
+
+- `coupon.turn` takes `{client_id, access_token, query, success, failure}`.
+- callback `success` will be called with no argument.
+- callback `failure`  will be called with a `error object`.
+
+### querify
+
+- synchronous `utility.querify` takes `{information, couponUse, filter}` and returns `query`.
+- optional `couponUse` accepts..
+    + `'on'` or something to be evaluated as `true`
+    + `'off'` or something to be evaluated as `false`
+- optional `filter` accepts array or string of phone number(s) and filter query if provided.

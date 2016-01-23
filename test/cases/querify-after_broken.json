@@ -1,0 +1,16 @@
+{
+    "couponInfo": [
+        {
+            "hdoInfo": [
+                {
+                    "hdoServiceCode": "hdoXXXXXXXX",
+                    "couponUse"     : false
+                },
+                {
+                    "hdoServiceCode": "hdoZZZZZZZZ",
+                    "couponUse"     : false
+                }
+            ]
+        }
+    ]
+}

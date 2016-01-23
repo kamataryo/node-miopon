@@ -1,0 +1,77 @@
+{
+    "returnCode": "OK",
+    "couponInfo": [
+        {
+            "hddServiceCode": "hddXXXXXXXX",
+            "plan"          : "Light Start",
+            "hdoInfo": [
+                {
+                    "hdoServiceCode": "hdoXXXXXXXX",
+                    "number"        : "1234567890",
+                    "iccid"         : "DN00XXXXXXXXXX",
+                    "regulation"    : true,
+                    "sms"           : true,
+                    "voice"         : true,
+                    "couponUse"     : false,
+                    "coupon": [
+                        { "volume": 100, "expire": null, "type": "sim" }
+                    ]
+                },
+                {
+                    "hdoServiceCode": "hdoYYYYYYYY",
+                    "number"        : "2345678901",
+                    "iccid"         : "DN00YYYYYYYYYY",
+                    "regulation"    : true,
+                    "sms"           : true,
+                    "voice"         : true,
+                    "couponUse"     : false,
+                    "coupon"        : [
+                        { "volume": 100, "expire": null, "type": "sim" }
+                    ]
+                },
+                {
+                    "hdoServiceCode": "hdoZZZZZZZZ",
+                    "number"        : "3456789012",
+                    "iccid"         : "DN00ZZZZZZZZZZ",
+                    "regulation"    : true,
+                    "sms"           : true,
+                    "voice"         : true,
+                    "couponUse"     : false,
+                    "coupon"        : [
+                        { "volume": 100, "expire": null, "type": "sim" }
+                    ]
+                }
+            ],
+            "coupon": [
+                { "volume":100, "expire":"201312", "type":"bundle" },
+                { "volume":200, "expire":"201401", "type":"bundle" },
+                { "volume":0,   "expire":"201312", "type":"topup" },
+                { "volume":400, "expire":"201401", "type":"topup" },
+                { "volume":0,   "expire":"201402", "type":"topup" },
+                { "volume":400, "expire":"201403", "type":"topup" }
+            ]
+        },
+        {
+            "hddServiceCode": "hddWWWWWWWW",
+            "plan"          : "Light Start",
+            "hdoInfo": [
+                {
+                    "hdoServiceCode": "hdoWWWWWWWW",
+                    "number"        : "4567890123",
+                    "iccid"         : "DN00WWWWWWWWWW",
+                    "regulation"    : true,
+                    "sms"           : true,
+                    "voice"         : true,
+                    "couponUse"     : false,
+                    "coupon": [
+                        { "volume": 100, "expire": null, "type": "sim" }
+                    ]
+                }
+            ],
+            "coupon": [
+                { "volume":100, "expire":"201312", "type":"bundle" },
+                { "volume":400, "expire":"201403", "type":"topup" }
+            ]
+        }
+    ]
+}

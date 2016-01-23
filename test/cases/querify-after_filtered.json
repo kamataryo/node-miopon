@@ -1,0 +1,20 @@
+{
+    "couponInfo": [
+        {
+            "hdoInfo": [
+                {
+                    "hdoServiceCode": "hdoYYYYYYYY",
+                    "couponUse"     : false
+                }
+            ]
+        },
+        {
+            "hdoInfo": [
+                {
+                    "hdoServiceCode": "hdoWWWWWWWW",
+                    "couponUse"     : false
+                }
+            ]
+        }
+    ]
+}
