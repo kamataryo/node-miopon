@@ -1,5 +1,5 @@
 # node-miopon
-miopon API wrapper for nodejs.
+This is miopon [API](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp) wrapper for nodejs.
 
 ## install
 `npm install node-miopon`

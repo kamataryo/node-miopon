@@ -2,7 +2,6 @@ gulp      = require 'gulp'
 plumber   = require 'gulp-plumber'
 coffee    = require 'gulp-coffee'
 mocha     = require 'gulp-mocha'
-# webserver = require 'gulp-webserver'
 
 gulp.task 'coffee', ->
     gulp.src './miopon.coffee'
@@ -12,14 +11,6 @@ gulp.task 'coffee', ->
         }
         .pipe gulp.dest './'
 
-
-# gulp.task 'webserver', ->
-#   gulp.src './'
-#     .pipe webserver {
-#       livereload: true,
-#       directoryListing: true,
-#       open: true
-#     }
 
 
 gulp.task 'mocha',['coffee'], ->
