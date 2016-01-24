@@ -1,4 +1,6 @@
 # node-miopon
+![node-miopon](icon.svg)
+
 [![Build Status](https://travis-ci.org/KamataRyo/node-miopon.svg?branch=master)](https://travis-ci.org/KamataRyo/node-miopon)
 [![npm version](https://badge.fury.io/js/node-miopon.svg)](https://badge.fury.io/js/node-miopon)
 ![dependencies](https://david-dm.org/kamataryo/node-miopon.svg)
