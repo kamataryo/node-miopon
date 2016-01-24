@@ -154,12 +154,20 @@ describe 'The module `utility`, \n', ->
                             correct =require '../test/cases/querify-after_filtered.json'
                             expect(result).to.eql correct
 
-                        it '`querify` works well with coupon order', ->
+                        it '`querify` works well with coupon order1', ->
                             result = utility.querify {
                                 information: require '../test/cases/querify-before.json'
                                 couponUse: true
                             }
-                            correct =require '../test/cases/querify-after_ordered.json'
+                            correct =require '../test/cases/querify-after_ordered1.json'
+                            expect(result).to.eql correct
+
+                        it '`querify` works well with coupon order2', ->
+                            result = utility.querify {
+                                information: require '../test/cases/querify-before.json'
+                                couponUse: 'off'
+                            }
+                            correct =require '../test/cases/querify-after_ordered2.json'
                             expect(result).to.eql correct
 
                         it '`querify` works well with broken input', ->
