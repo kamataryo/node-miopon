@@ -1,5 +1,7 @@
 # node-miopon
-![node-miopon](icon.png)
+
+[<img src="icon.png" width="60" alt="アイコン">](https://www.npmjs.com/package/node-miopon
+)
 
 [![Build Status](https://travis-ci.org/KamataRyo/node-miopon.svg?branch=master)](https://travis-ci.org/KamataRyo/node-miopon)
 [![npm version](https://badge.fury.io/js/node-miopon.svg)](https://badge.fury.io/js/node-miopon)
