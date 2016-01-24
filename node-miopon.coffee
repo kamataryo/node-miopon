@@ -85,7 +85,7 @@ class Coupon
             if res.statusCode is 200
                 callback success, {information: JSON.parse body}
             else
-                callback failure, err
+                callback failure, err, res
 
 
 
