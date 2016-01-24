@@ -8,7 +8,7 @@
 ![dependencies](https://david-dm.org/kamataryo/node-miopon.svg)
 [![Code Climate](https://codeclimate.com/github/KamataRyo/node-miopon/badges/gpa.svg)](https://codeclimate.com/github/KamataRyo/node-miopon)
 
-[みおぽんAPI](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp)のNodejs ラッパーです。
+[IIJmioクーポンスイッチAPI](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp)のNodejs ラッパーです。
 oAuthとAPIへのアクセスをラップしています。
 
 
@@ -16,16 +16,27 @@ oAuthとAPIへのアクセスをラップしています。
 ## install
 `npm install node-miopon`
 
-## usage
-`miopon = require 'node-miopon'`
-
-`coupon = new miopon.Coupon`
-
-
-
 ## 例
 
+最初にデベロッパーIDとリダイレクトURIの指定が必要です。公式サイトに従って登録してください。
+[IIJmioクーポンスイッチAPIのご利用に当たって](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp#goriyou)
+
+
+### oAuthでaccess_tokenを取得
+    coupon = new require('node-miopon').Coupon
+    coupon = new Coupon()
+    coupon.oAuth {
+        mioID: 'aaaaaaaaa'
+        mioPass: 'bbbbbbbb'
+        client_id: 'cccccccccc' # デベロッパーID
+        redirect_uri: 'ddddd'
+        success: ({access_token})->
+            console.log 'authorized!'
+    }
+
+
 ### 電話番号'09000000000'のクーポンをオンにする
+    coupon = new require('node-miopon').Coupon
     client_id = 'xxxxxxxxxxxxxxxxxxx'
     access_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
     coupon = new Coupon()
