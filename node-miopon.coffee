@@ -30,6 +30,7 @@ class Coupon
                     unless status is 'success'
                         callback failure, {Error: 'page open failed'}
                         ph.exit()
+                        return
                     else
                         # phantomJS sandobox
                         page.evaluate (mioID, mioPass) ->
@@ -72,6 +73,7 @@ class Coupon
         callback = utility.callback
         unless client_id && access_token
             callback failure, new Error 'no access_token specified'
+            return
         require('request') {
             url: this.urls.endpoint
             method: 'GET'
@@ -107,8 +109,10 @@ class Coupon
         ,(err, res, body) ->
             if res.statusCode is 200
                 callback success
+                return
             else
                 callback failure, err
+                return
 
 
     urls:
@@ -141,12 +145,12 @@ utility =
 
     # trim reduntdant element from the JSON of info (usually obtain from API(Coupon.inform))
     # Synchronous method
-    querify: ({information, couponUse, filter}) ->
+    querify: ({information, couponUse, filter}) =>
         unless information
             throw new Error 'no source option exception'
         _ = require 'underscore'
-        couponUse = this.orderCouponUse couponUse
-        filter = this.arraify filter
+        couponUse = this.utility.orderCouponUse couponUse
+        filter = this.utility.arraify filter
 
         # create clone object after traversing `information` object
         # eliminate parental object without certain property
