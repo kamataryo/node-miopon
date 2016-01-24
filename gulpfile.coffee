@@ -4,7 +4,7 @@ coffee    = require 'gulp-coffee'
 mocha     = require 'gulp-mocha'
 
 gulp.task 'coffee', ->
-    gulp.src './miopon.coffee'
+    gulp.src './node-miopon.coffee'
         .pipe plumber()
         .pipe coffee {
             bare: false
@@ -12,10 +12,9 @@ gulp.task 'coffee', ->
         .pipe gulp.dest './'
 
 
-
 gulp.task 'mocha',['coffee'], ->
     gulp.src [
-        './test/miopon.mocha.coffee'
+        './test/node-miopon.mocha.coffee'
     ]
         .pipe mocha {
             compilers: 'coffee-script'
@@ -23,10 +22,9 @@ gulp.task 'mocha',['coffee'], ->
         }
 
 
-
 gulp.task 'watch', ->
     gulp.watch [
-        './miopon.coffee'
+        './node-miopon.coffee'
         './test/*.coffee'
         './test/cases/*.json'
     ]

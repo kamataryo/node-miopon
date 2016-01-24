@@ -1,11 +1,13 @@
 # node-miopon
+[![Build Status](https://travis-ci.org/KamataRyo/node-miopon.svg?branch=master)](https://travis-ci.org/KamataRyo/node-miopon)
+
 This is miopon [API](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp) wrapper for nodejs.
 
 ## install
 `npm install node-miopon`
 
 ## usage
-`miopon = require 'miopon'`
+`miopon = require 'node-miopon'`
 
 `coupon = new miopon.Coupon`
 
