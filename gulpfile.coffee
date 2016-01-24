@@ -3,6 +3,8 @@ plumber   = require 'gulp-plumber'
 coffee    = require 'gulp-coffee'
 mocha     = require 'gulp-mocha'
 
+
+# build
 gulp.task 'coffee', ->
     gulp.src './node-miopon.coffee'
         .pipe plumber()
@@ -11,7 +13,7 @@ gulp.task 'coffee', ->
         }
         .pipe gulp.dest './'
 
-
+# test
 gulp.task 'mocha',['coffee'], ->
     gulp.src [
         './test/node-miopon.mocha.coffee'

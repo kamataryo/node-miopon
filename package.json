@@ -5,6 +5,7 @@
   "main": "node-miopon.js",
   "scripts": {
     "test": "gulp mocha",
+    "prepublish": "gulp voffee",
     "postinstall": "gulp coffee"
   },
   "repository": {
