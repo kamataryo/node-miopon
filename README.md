@@ -4,7 +4,10 @@
 ![dependencies](https://david-dm.org/kamataryo/node-miopon.svg)
 [![Code Climate](https://codeclimate.com/github/KamataRyo/node-miopon/badges/gpa.svg)](https://codeclimate.com/github/KamataRyo/node-miopon)
 
-This is a [miopon API](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp) wrapper for nodejs.
+[みおぽんAPI](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp)のNodejs ラッパーです。
+oAuthとAPIへのアクセスをラップしています。
+
+
 
 ## install
 `npm install node-miopon`
@@ -14,12 +17,13 @@ This is a [miopon API](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp) wrapper f
 
 `coupon = new miopon.Coupon`
 
-`utility = miopon.utility`
 
 
-### turn the coupon of number '09000000000' on
+## 例
+
+### 電話番号'09000000000'のクーポンをオンにする
     client_id = 'xxxxxxxxxxxxxxxxxxx'
-    access_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'        
+    access_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
     coupon = new Coupon()
 
     # request all the phone number list at first
@@ -29,7 +33,7 @@ This is a [miopon API](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp) wrapper f
         success: ({information}) ->
 
             # filter and create query
-            query = utility.querify {
+            query = miopon.utility.querify {
                 information
                 couponUse: 'on'
                 filter: '09000000000'
@@ -50,7 +54,7 @@ This is a [miopon API](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp) wrapper f
 
 
 
-## API
+## APIs
 
 ### oAuth
 
@@ -72,7 +76,7 @@ This is a [miopon API](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp) wrapper f
 
 ### querify
 
-- synchronous `utility.querify` takes `{information, couponUse, filter}` and returns `query`.
+- `utility.querify` takes `{information, couponUse, filter}` and returns `query` synchronously.
 - optional `couponUse` accepts..
     + `'on'` or something to be evaluated as `true`
     + `'off'` or something to be evaluated as `false`
