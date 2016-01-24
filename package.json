@@ -1,6 +1,6 @@
 {
   "name": "node-miopon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "miopon API wrapper for nodejs",
   "main": "node-miopon.js",
   "scripts": {
