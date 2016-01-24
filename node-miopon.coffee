@@ -87,7 +87,6 @@ class Coupon
 
 
 
-    # depends on inform method
     turn: ({client_id, access_token, query, success, failure}) =>
         callback = utility.callback
         unless client_id && access_token

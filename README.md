@@ -1,7 +1,10 @@
 # node-miopon
 [![Build Status](https://travis-ci.org/KamataRyo/node-miopon.svg?branch=master)](https://travis-ci.org/KamataRyo/node-miopon)
+[![npm version](https://badge.fury.io/js/node-miopon.svg)](https://badge.fury.io/js/node-miopon)
+![dependencies](https://david-dm.org/kamataryo/node-miopon.svg)
+[![Code Climate](https://codeclimate.com/github/KamataRyo/node-miopon/badges/gpa.svg)](https://codeclimate.com/github/KamataRyo/node-miopon)
 
-This is miopon [API](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp) wrapper for nodejs.
+This is a [miopon API](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp) wrapper for nodejs.
 
 ## install
 `npm install node-miopon`
