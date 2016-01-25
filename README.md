@@ -105,6 +105,7 @@ CoffeeScriptでの例
 
 ### 適当なCLIツール（タイマー付き）
 `mio on 900 # 15分後にon`
+`mio off    # ただちにoff`
 
 #### mio
     #!/bin/bash

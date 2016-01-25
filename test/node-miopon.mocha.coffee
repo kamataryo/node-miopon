@@ -29,8 +29,64 @@ describe 'The `Coupon` constructor, \n', ->
         it 'the instance coupon should have a string property `api.urls.oAuth`', ->
             expect(coupon.urls.oAuth).to.be.an 'string'
 
-        it 'the instance coupon should have a string property `api.urls.endpoint`', ->
-            expect(coupon.urls.endpoint).to.be.an 'string'
+        it 'the instance coupon should have a string property `api.urls.coupon`', ->
+            expect(coupon.urls.coupon).to.be.an 'string'
+
+
+        describe 'oAuth fails wihout mioID, mioPass, client_id or redirect_uri:', ->
+            mioID = 'aaaa'
+            mioPass = 'bbb'
+            client_id = 'ccc'
+            redirect_uri = 'ddd'
+            args = [
+                {}
+                {mioID}, {mioPass}, {client_id}, {redirect_uri}
+                {mioID, mioPass}, {mioID, client_id}, {mioID, redirect_uri}
+                {mioPass, client_id}, {mioPass, redirect_uri}
+                {client_id, redirect_uri}
+                {mioID, mioPass, client_id}
+                {mioID, mioPass, redirect_uri}
+                {mioID, client_id, redirect_uri}
+                {mioPass, client_id, redirect_uri}
+                {mioID, mioPass, client_id, redirect_uri}
+            ]
+            _.each args, (arg) ->
+                it arg.toString(), (done) ->
+                    arg.failure = -> done()
+                    coupon.inform arg
+
+
+        describe 'inform fails wihout access_token or client_id:', ->
+            access_token = 'aaaa'
+            client_id = 'bbb'
+            args = [
+                {}
+                {access_token}
+                {client_id}
+            ]
+            _.each args, (arg) ->
+                it arg.toString(), (done) ->
+                    arg.failure = -> done()
+                    coupon.inform arg
+
+
+        describe 'turn fails wihout access_token, client_id or query:', ->
+            access_token = 'aaaa'
+            client_id = 'bbb'
+            query = {query:''}
+            args = [
+                {}
+                {access_token}
+                {client_id}
+                {access_token, client_id}
+                {client_id, query}
+                {query, access_token}
+            ]
+            _.each args, (arg) ->
+                it arg.toString(), (done) ->
+                    arg.failure = -> done()
+                    coupon.turn arg
+
 
 describe 'The module `utility`, \n', ->
     utility = null

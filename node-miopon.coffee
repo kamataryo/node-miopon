@@ -75,7 +75,7 @@ class Coupon
             callback failure, new Error 'no access_token specified'
             return
         require('request') {
-            url: this.urls.endpoint
+            url: this.urls.coupon
             method: 'GET'
             headers:
                 'X-IIJmio-Developer': client_id
@@ -98,7 +98,7 @@ class Coupon
             callback failure, new Error 'no query specified'
             return
         require('request') {
-            url: this.urls.endpoint
+            url: this.urls.coupon
             method: 'PUT'
             headers:
                 'X-IIJmio-Developer': client_id
@@ -117,7 +117,7 @@ class Coupon
 
     urls:
         oAuth: 'https://api.iijmio.jp/mobile/d/v1/authorization/'
-        endpoint: 'https://api.iijmio.jp/mobile/d/v1/coupon/'
+        coupon: 'https://api.iijmio.jp/mobile/d/v1/coupon/'
 
 
 
@@ -168,6 +168,8 @@ utility =
                             }
                     if each_couponInfo.hdoInfo.length > 0 then result.couponInfo.push each_couponInfo
         return result
+
+
 
     # utility function for safe callback
     callback: ->
