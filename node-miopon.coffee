@@ -82,8 +82,11 @@ class Coupon
                 'X-IIJmio-Authorization': access_token
         }
         , (err, res, body)->
-            if res.statusCode is 200
-                callback success, {information: JSON.parse body}
+            if res
+                if res.statusCode is 200
+                    callback success, {information: JSON.parse body}
+                else
+                    callback failure, err
             else
                 callback failure, err, res
 

@@ -5,7 +5,8 @@
 
 [![Build Status](https://travis-ci.org/KamataRyo/node-miopon.svg?branch=master)](https://travis-ci.org/KamataRyo/node-miopon)
 [![npm version](https://badge.fury.io/js/node-miopon.svg)](https://badge.fury.io/js/node-miopon)
-![dependencies](https://david-dm.org/kamataryo/node-miopon.svg)
+[![Dependency Status](https://david-dm.org/kamataryo/node-miopon.svg)](https://david-dm.org/kamataryo/node-miopon)
+[![devDependency Status](https://david-dm.org/kamataryo/node-miopon/dev-status.svg)](https://david-dm.org/kamataryo/node-miopon#info=devDependencies)
 [![Code Climate](https://codeclimate.com/github/KamataRyo/node-miopon/badges/gpa.svg)](https://codeclimate.com/github/KamataRyo/node-miopon)
 
 [IIJmioクーポンスイッチAPI](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp)のNodejs ラッパーです。
@@ -103,13 +104,14 @@ CoffeeScriptでの例
     }
 
 
-### 適当なCLIツール（タイマー付き）
-`mio on 900 # 15分後にon`
-`mio off    # ただちにoff`
+### 暫定的に使っているCLIツール（タイマー付き）
+`mio on 900 # 15分後にクーポンをonにする`
+`mio off    # ただちにクーポンをoffにする`
 
 #### mio
     #!/bin/bash
     # パスをとおしておく
+    # 実行権限をファイルは実行可能にしておく
     coffee path/to/myscript.coffee `echo $1` `echo $2`
 
 #### myscript.coffee

@@ -52,8 +52,27 @@ describe 'The `Coupon` constructor, \n', ->
             ]
             _.each args, (arg) ->
                 it arg.toString(), (done) ->
-                    arg.failure = -> done()
+                    arg.failure = ->
+                        done()
+                    arg.success = ->
+                        expect(false).to.be.true
+                        done()
                     coupon.inform arg
+
+
+            it 'oAuth even failes with nonsense arguments', (done) ->
+                this.timeout 50000
+                coupon.oAuth {
+                    mioID
+                    mioPass
+                    client_id
+                    redirect_uri
+                    success: ->
+                        expect(false).to.be.true
+                        done()
+                    failure: ->
+                        done()
+                }
 
 
         describe 'inform fails wihout access_token or client_id:', ->
@@ -66,8 +85,24 @@ describe 'The `Coupon` constructor, \n', ->
             ]
             _.each args, (arg) ->
                 it arg.toString(), (done) ->
-                    arg.failure = -> done()
+                    arg.failure = ->
+                        done()
+                    arg.success = ->
+                        expect(false).to.be.true
+                        done()
                     coupon.inform arg
+
+            it 'inform even fails with nonsense access_token and client_id.', (done) ->
+                this.timeout 20000
+                coupon.inform {
+                    client_id
+                    access_token
+                    failure: ->
+                        done()
+                    success: ->
+                        expect(false).to.be.true
+                        done()
+                }
 
 
         describe 'turn fails wihout access_token, client_id or query:', ->
@@ -84,8 +119,25 @@ describe 'The `Coupon` constructor, \n', ->
             ]
             _.each args, (arg) ->
                 it arg.toString(), (done) ->
-                    arg.failure = -> done()
+                    arg.failure = ->
+                        done()
+                    arg.success = ->
+                        expect(false).to.be.true
+                        done()
                     coupon.turn arg
+
+            it 'turn even fails with nonsense access_token, client_id and query.', (done) ->
+                this.timeout 20000
+                coupon.inform {
+                    client_id
+                    access_token
+                    query
+                    failure: ->
+                        done()
+                    success: ->
+                        expect(false).to.be.true
+                        done()
+                }
 
 
 describe 'The module `utility`, \n', ->
