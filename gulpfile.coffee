@@ -13,11 +13,10 @@ gulp.task 'coffee', ->
         }
         .pipe gulp.dest './'
 
+
 # test
 gulp.task 'mocha',['coffee'], ->
-    gulp.src [
-        './test/node-miopon.mocha.coffee'
-    ]
+    gulp.src './test/node-miopon.mocha.coffee'
         .pipe mocha {
             compilers: 'coffee-script'
             reporter: 'nyan'
@@ -27,7 +26,7 @@ gulp.task 'mocha',['coffee'], ->
 gulp.task 'watch', ->
     gulp.watch [
         './node-miopon.coffee'
-        './test/*.coffee'
+        './test/node-miopon.mocha.coffee'
         './test/cases/*.json'
     ]
     , [

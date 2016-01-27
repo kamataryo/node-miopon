@@ -1,13 +1,12 @@
 # node-miopon
 
-[<img src="icon.png" width="60" alt="アイコン">](https://www.npmjs.com/package/node-miopon
+[<img src="icon/icon.png" width="60" alt="アイコン">](https://www.npmjs.com/package/node-miopon
 )
 
 [![Build Status](https://travis-ci.org/KamataRyo/node-miopon.svg?branch=master)](https://travis-ci.org/KamataRyo/node-miopon)
 [![npm version](https://badge.fury.io/js/node-miopon.svg)](https://badge.fury.io/js/node-miopon)
 [![Dependency Status](https://david-dm.org/kamataryo/node-miopon.svg)](https://david-dm.org/kamataryo/node-miopon)
 [![devDependency Status](https://david-dm.org/kamataryo/node-miopon/dev-status.svg)](https://david-dm.org/kamataryo/node-miopon#info=devDependencies)
-[![Code Climate](https://codeclimate.com/github/KamataRyo/node-miopon/badges/gpa.svg)](https://codeclimate.com/github/KamataRyo/node-miopon)
 
 [IIJmioクーポンスイッチAPI](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp)のNodejs ラッパーです。
 oAuthとAPIへのアクセスをラップしています。
