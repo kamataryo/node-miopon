@@ -1,6 +1,8 @@
 gulp      = require 'gulp'
 plumber   = require 'gulp-plumber'
 coffee    = require 'gulp-coffee'
+header    = require 'gulp-header'
+chmod     = require 'gulp-chmod'
 mocha     = require 'gulp-mocha'
 
 
@@ -12,6 +14,21 @@ gulp.task 'coffee', ->
             bare: false
         }
         .pipe gulp.dest './'
+
+gulp.task 'cli-coffee', ->
+    gulp.src './bin/mio.coffee'
+        .pipe plumber()
+        .pipe coffee {
+            bare: false
+        }
+        .pipe header '#!/usr/bin/env node\n'
+        .pipe chmod 755
+        .pipe gulp.dest './bin/'
+
+gulp.task 'build', [
+    'coffee'
+    'cli-coffee'
+]
 
 
 # test
