@@ -1,11 +1,16 @@
 language: node_js
 node_js:
-    - 0.12
-
+- 0.12
 branches:
   only:
-    - master
-
+  - master
 script:
-  - npm build
   - npm test
+deploy:
+  provider: npm
+  email: mugil.cephalus+npmjs.com@gmail.com
+  api_key:
+    secure: cZDIDpg0fRsoXpvHyLIqZsLzVUqkySG4EBk2FfQ6Iysj0iZHQcbfMvS19OLWpmb6dJaZt+kyxI1/K9clSmHbUNVo01Tv3YMKejIq1xFq7iZNc36XI6Y5J2LiBylcRuRso9KWi5j03x2IYLSYmW6Alrz4bvgBbwn4cKHp6Qy/5qxn8SeXmicsPTGXTghKWT5SlMcdtz94T4qsRkQchaG09Y170SKTu1AoNb2wlW+2Vy90IRhcLcMWmx52HxN9Q1lUeEmzkHeCTo0sSTRRfP5gfCjGZ588ohmSVoYA7dRhxOa36HaekXrR77BIZV5OiJDiWeSUxi2iun+wOWQbJ6gWDBqZz6d3FmWftDXuVCqc+C7Hd9dGGfSI0i7X+j1njshECR/PuVIKzzjW/Tfa5MfF6mDDE8p+BrC9pXLihSFoRozOPnl6QYDThYeG+wHzR5h+cZ3FFTUBxS4yPmS3CpndRBNib7IuHYv8kCqOqB4QxdUyU9mvte1R1HkX46Rh/56SqJTOD/H5mPpaYKV1yglRt/Dc01GpCoNfnsLu4zlyGQ7rTf+xuSCQMSo4CSDAPmC40RdavlBT7RRWaT9wcO/gOWm3GUtp9EvDHM1+I0eRxtfQA87yypiFK8pj6j31YhO8l+pFWz4ng0A0bbyF44aL9T9hgMpclMAbHeYQTpxingk=
+  on:
+    tags: true
+    repo: KamataRyo/node-miopon
