@@ -1,9 +1,9 @@
 language: node_js
 node_js:
 - 0.12
-branches:
-  only:
-  - master
+# branches:
+#   only:
+#   - master
 script:
   - npm test
 deploy:
