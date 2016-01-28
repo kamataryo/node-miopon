@@ -1,21 +1,20 @@
-gulp      = require 'gulp'
-plumber   = require 'gulp-plumber'
-coffee    = require 'gulp-coffee'
-header    = require 'gulp-header'
-chmod     = require 'gulp-chmod'
-mocha     = require 'gulp-mocha'
-
+gulp    = require 'gulp'
+plumber = require 'gulp-plumber'
+coffee  = require 'gulp-coffee'
+header  = require 'gulp-header'
+chmod   = require 'gulp-chmod'
+mocha   = require 'gulp-mocha'
 
 # build
 gulp.task 'coffee', ->
-    gulp.src './node-miopon.coffee'
+    gulp.src './index.coffee'
         .pipe plumber()
         .pipe coffee {
             bare: false
         }
         .pipe gulp.dest './'
 
-gulp.task 'cli-coffee', ->
+gulp.task 'bin-coffee', ->
     gulp.src './bin/mio.coffee'
         .pipe plumber()
         .pipe coffee {
@@ -27,33 +26,33 @@ gulp.task 'cli-coffee', ->
 
 gulp.task 'build', [
     'coffee'
-    'cli-coffee'
+    'bin-coffee'
 ]
 
-
 # test
-gulp.task 'mocha',['coffee'], ->
-    gulp.src './test/node-miopon.mocha.coffee'
+gulp.task 'test',['build'], ->
+    gulp.src [
+        './test/index.mocha.coffee'
+        './test/mio.mocha.coffee'
+    ]
         .pipe mocha {
             compilers: 'coffee-script'
             reporter: 'nyan'
         }
 
-
 gulp.task 'watch', ->
     gulp.watch [
-        './node-miopon.coffee'
-        './test/node-miopon.mocha.coffee'
+        './index.coffee'
+        './test/*.coffee'
         './test/cases/*.json'
     ]
     , [
-        'coffee'
-        'mocha'
+        'build'
+        'test'
     ]
 
-
 gulp.task 'default', [
-    'coffee'
-    'mocha'
+    'build'
+    'test'
     'watch'
 ]

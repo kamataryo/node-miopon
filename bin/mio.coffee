@@ -1,5 +1,5 @@
 fs = require 'fs'
-miopon = require '../node-miopon'
+miopon = require '../index'
 coupon = new miopon.Coupon()
 querify = miopon.utility.querify
 CONF_PATH = (process.env.HOME || process.env.USERPROFILE) + '/.node-miopon.json'

@@ -1,6 +1,6 @@
 expect = require('chai').expect
 _      = require 'underscore'
-miopon = require '../node-miopon'
+miopon = require '../index'
 
 
 describe 'The `Coupon` constructor, \n', ->

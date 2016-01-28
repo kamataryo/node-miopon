@@ -2,12 +2,12 @@
   "name": "node-miopon",
   "version": "1.0.12",
   "description": "miopon API wrapper for nodejs",
-  "main": "node-miopon.js",
+  "main": "index.js",
   "bin": {
     "mio": "bin/mio.js"
   },
   "scripts": {
-    "test" : "gulp mocha",
+    "test" : "gulp test",
     "build" : "gulp build",
     "prepublish" : "gulp build",
     "prelink" : "gulp build"
