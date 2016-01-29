@@ -14,23 +14,8 @@ gulp.task 'coffee', ->
         }
         .pipe gulp.dest './'
 
-gulp.task 'bin-coffee', ->
-    gulp.src './bin/mio.coffee'
-        .pipe plumber()
-        .pipe coffee {
-            bare: false
-        }
-        .pipe header '#!/usr/bin/env node\n'
-        .pipe chmod 755
-        .pipe gulp.dest './bin/'
-
-gulp.task 'build', [
-    'coffee'
-    'bin-coffee'
-]
-
 # test
-gulp.task 'test',['coffee'], ->
+gulp.task 'mocha',['coffee'], ->
     gulp.src [
         './test/index.mocha.coffee'
     ]
@@ -39,44 +24,19 @@ gulp.task 'test',['coffee'], ->
             reporter: 'nyan'
         }
 
-# test
-gulp.task 'bin-test',['bin-coffee'], ->
-    gulp.src [
-        './bin/test/library.mocha.coffee'
-    ]
-        .pipe mocha {
-            compilers: 'coffee-script'
-            reporter: 'nyan'
-        }
 
+# synonym
+gulp.task 'build', ['coffee']
+gulp.task 'test', ['mocha']
 
-gulp.task 'bin-watch', ->
-    gulp.watch [
-        './bin/mio.coffee'
-        './bin/library.coffee'
-        './bin/test/library.mocha.coffee'
-    ]
-    , [
-        'bin-coffee'
-        'bin-test'
-    ]
 
 
 gulp.task 'watch', ->
     gulp.watch [
         './index.coffee'
-        './bin/mio.coffee'
         './test/index.mocha.coffee'
-        './bin/test/mio.mocha.coffee'
         './test/cases/*.json'
     ]
-    , [
-        'build'
-        'test'
-    ]
+    , ['build','test']
 
-gulp.task 'default', [
-    'build'
-    'test'
-    'watch'
-]
+gulp.task 'default', ['build','test','watch']

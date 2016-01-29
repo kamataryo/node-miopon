@@ -3,9 +3,6 @@
   "version": "1.0.12",
   "description": "miopon API wrapper for nodejs",
   "main": "index.js",
-  "bin": {
-    "mio": "bin/mio.js"
-  },
   "scripts": {
     "test" : "gulp test",
     "build" : "gulp build",
@@ -19,6 +16,7 @@
   "author": "KamataRyo",
   "license": "MIT",
   "keywords": [
+    "IIJmio",
     "miopon",
     "API",
     "coupon",

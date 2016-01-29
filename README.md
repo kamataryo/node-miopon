@@ -8,11 +8,11 @@
 [![Dependency Status](https://david-dm.org/kamataryo/node-miopon.svg)](https://david-dm.org/kamataryo/node-miopon)
 [![devDependency Status](https://david-dm.org/kamataryo/node-miopon/dev-status.svg)](https://david-dm.org/kamataryo/node-miopon#info=devDependencies)
 
-[IIJmioクーポンスイッチAPI](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp)のNodejs ラッパーです。
+[IIJmioクーポンスイッチAPI](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp)のNode.jsラッパーです。
 oAuthとAPIへのアクセスをラップしています。
 
 実行にはデベロッパーIDとリダイレクトURIの指定が必要です。これらは公式サイトに従って登録してください。
-[IIJmioクーポンスイッチAPIのご利用に当たって(IIJmio)](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp#goriyou)
+[IIJmioクーポンスイッチAPIのご利用に当たって(IIJmioのサイト)](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp#goriyou)
 
 
 ## install
@@ -75,7 +75,7 @@ CoffeeScriptでの例
     client_id    = 'xxxxxxxxxxxxxxxxxxx'
     access_token = 'yyyyyyyyyyyyyyyyyyy'
 
-    # この例では、最初に全ての回線情報を取得している
+    # この例では、最初に全ての回線情報を取得しています
     coupon.inform {
         client_id
         access_token
@@ -101,110 +101,3 @@ CoffeeScriptでの例
                     console.log err
             }
     }
-
-
-### 暫定的に使っているCLIツール（タイマー付き）
-`mio on 900 # 15分後にクーポンをonにする`
-`mio off    # ただちにクーポンをoffにする`
-
-#### mio
-    #!/bin/bash
-    # パスをとおしておく
-    # 実行権限をファイルは実行可能にしておく
-    coffee path/to/myscript.coffee `echo $1` `echo $2`
-
-#### myscript.coffee
-    fs = require 'fs'
-    coupon = new require('node-miopon').Coupon()
-    querify = miopon.utility.querify
-
-    # 設定ファイル。以下の文字列メンバを持つJSON形式。
-    # {mioID, mioPass, client_id, redirect_uri, access_token}
-    CONF_PATH = 'path/to/config_file'
-
-    # 引数を展開
-    usage = if process.argv[2] is 'on' then true else false
-    delay = if process.argv[3] then (process.argv[3] / 1000) else 0
-    data = ''
-
-    # 設定ファイル読み込み
-    fs.createReadStream CONF_PATH
-        .on 'error', (err) ->
-            if err.code is 'ENOENT'
-                console.log 'config file not found.'
-        .on 'data', (chunk) ->
-            data += chunk
-        .on 'end', () ->
-            config = JSON.parse data
-
-            mioID = config.mioID
-            mioPass = config.mioPass
-            client_id = config.client_id
-            access_token = config.access_token
-            redirect_uri = config.redirect_uri
-
-            setTimeout ->
-                coupon.inform {
-                    client_id
-                    access_token
-                    success: ({information})->
-
-                        # 契約している回線の情報全ての取得に成功
-                        coupon.turn {
-                            client_id
-                            access_token
-                            query: querify {
-                                # リクエストとして投げられる形に整形
-                                information
-                                couponUse: usage
-                            }
-                            success: ->
-                                console.log 'coupon turn successed!'
-                            failure: ->
-                                console.log 'coupon turn failed..'
-                        }
-
-                    failure: (err, res) ->
-                        unless res
-                            console.log '多分アクセス回数多すぎ'
-                            return
-
-                        # 多分access_token期限切れ
-                        # 再度oAuthを通す
-                        coupon.oAuth {
-                            mioID
-                            mioPass
-                            client_id
-                            redirect_uri
-                            success: (result)->
-
-                                # oAuth成功
-                                access_token = result.access_token
-                                config.access_token = access_token
-
-                                # 設定ファイルに書き込み
-                                ws = fs.createWriteStream CONF_PATH
-                                ws.write JSON.stringify config
-                                ws.end()
-
-                                # 新しいaccess_tokenで再度トライ
-                                coupon.inform {
-                                    client_id
-                                    access_token
-                                    success: ({information})->
-                                        coupon.turn {
-                                            client_id
-                                            access_token
-                                            query: querify {
-                                                information
-                                                couponUse: usage
-                                            }
-                                            success: ->
-                                                console.log 'coupon turn successed!'
-                                            failure: ->
-                                                console.log 'coupon turn failed..'
-                                        }
-                                }
-                        }
-                    }
-        , delay
