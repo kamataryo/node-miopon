@@ -30,20 +30,44 @@ gulp.task 'build', [
 ]
 
 # test
-gulp.task 'test',['build'], ->
+gulp.task 'test',['coffee'], ->
     gulp.src [
         './test/index.mocha.coffee'
-        './test/mio.mocha.coffee'
     ]
         .pipe mocha {
             compilers: 'coffee-script'
             reporter: 'nyan'
         }
 
+# test
+gulp.task 'bin-test',['bin-coffee'], ->
+    gulp.src [
+        './bin/test/library.mocha.coffee'
+    ]
+        .pipe mocha {
+            compilers: 'coffee-script'
+            reporter: 'nyan'
+        }
+
+
+gulp.task 'bin-watch', ->
+    gulp.watch [
+        './bin/mio.coffee'
+        './bin/library.coffee'
+        './bin/test/library.mocha.coffee'
+    ]
+    , [
+        'bin-coffee'
+        'bin-test'
+    ]
+
+
 gulp.task 'watch', ->
     gulp.watch [
         './index.coffee'
-        './test/*.coffee'
+        './bin/mio.coffee'
+        './test/index.mocha.coffee'
+        './bin/test/mio.mocha.coffee'
         './test/cases/*.json'
     ]
     , [
