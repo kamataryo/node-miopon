@@ -291,6 +291,52 @@ describe 'The module `utility`, \n', ->
                             expect(result).to.eql correct
 
 
+        describe '`generageQuery`', ->
+
+            it 'the utility has a method `generageQuery`', ->
+                expect(utility.generageQuery).is.a 'function'
+
+
+            describe 'behaviors:', ->
+
+                it 'works with complex object', ->
+                    turnState = [
+                        {
+                            'hdoWWWWWWWW':true
+                        }
+                        {
+                            'hdoXXXXXXXX':false
+                            'hdoYYYYYYYY':true
+                        }
+                        {
+                            'hdoZZZZZZZZ':false
+                            'hdoVVVVVVVV':true
+                            'hdoUUUUUUUU':false
+                        }
+                    ]
+                    exact =
+                        couponInfo: [
+                            {
+                                hdoInfo: [
+                                    {hdoServiceCode: 'hdoWWWWWWWW', couponUse: true }
+                                ]
+                            }
+                            {
+                                hdoInfo: [
+                                    {hdoServiceCode: 'hdoXXXXXXXX', couponUse: false }
+                                    {hdoServiceCode: 'hdoYYYYYYYY', couponUse: true }
+                                ]
+                            }
+                            {
+                                hdoInfo: [
+                                    {hdoServiceCode: 'hdoZZZZZZZZ', couponUse: false }
+                                    {hdoServiceCode: 'hdoVVVVVVVV', couponUse: true }
+                                    {hdoServiceCode: 'hdoUUUUUUUU', couponUse: true }
+                                ]
+                            }
+                        ]
+                    expect(generageQuery {turnState}).to.eql exact
+
 
         describe '`callback`', ->
 
@@ -303,7 +349,7 @@ describe 'The module `utility`, \n', ->
                 expect(actual is 'aaaaaaaa').to.be.true
 
             it '`callback` also works asynchronously', (done) ->
-                utility.callback setTimeout,done,20
+                utility.callback setTimeout, done, 20
 
             it '`callback` do nothing with the 1st argument if non-function', ->
                 actual = utility.callback 'aaa', 'bbb'
