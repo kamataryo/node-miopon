@@ -47,6 +47,12 @@ informメソッドで得られたinformationオブジェクトを、turnメソ�
     + `'off'` or something to be evaluated as `false`
 - optional `filter` accepts array or string of phone number(s) and filter query if provided. If not, all of the information will be querified.
 
+### utility.generateQuery
+hdoServiceCodeを指定して、turnメソッドで用いるqueryオブジェクトを生成します。
+- `utility.generateQuery` takes `{turnStates}` and returns `query` synchronously.
+- `turnStates` should be a array of `{hdoServiceCode: couponUse}`
+
+
 
 ## example
 CoffeeScriptでの例
@@ -69,8 +75,10 @@ CoffeeScriptでの例
     }
 
 
-### 電話番号'09000000000'のクーポンをオンにする
-    coupon = new require('node-miopon').Coupon
+### 電話番号'0123'のクーポンをオンにする
+    miopon = require 'node-miopon'
+    coupon = new miopon.Coupon
+    utility = miopon.utility
 
     client_id    = 'xxxxxxxxxxxxxxxxxxx'
     access_token = 'yyyyyyyyyyyyyyyyyyy'
@@ -82,10 +90,10 @@ CoffeeScriptでの例
 
         success: ({information}) ->
             # informationオブジェクトを整形
-            query = miopon.utility.querify {
+            query = utility.querify {
                 information
                 couponUse: 'on'
-                filter: '09000000000'
+                filter: '0123'
             }
 
             # このクエリでturnメソッドを実行
@@ -100,4 +108,31 @@ CoffeeScriptでの例
                 failure: (err) ->
                     console.log err
             }
+    }
+
+### 複雑なクーポン操作 ー X,Zをonにし、Yをoffにする
+    miopon = require 'node-miopon'
+    coupon = new miopon.Coupon
+    utility = miopon.utility
+
+    client_id    = 'xxxxxxxxxxxxxxxxxxx'
+    access_token = 'yyyyyyyyyyyyyyyyyyy'
+
+    # hdoServiceCodeはinformメソッドなどで取得しておきます
+    query = utility.generateQuery [
+        {
+            'hdoXXXXXXXX': 'on'
+            'hdoYYYYYYYY': 'off'
+        },{
+            'hdoZZZZZZZZ': 'on'
+        }
+    ]
+
+    coupon.turn {
+        client_id
+        access_token
+        query
+
+        success: ->
+            console.log 'turn success!'
     }

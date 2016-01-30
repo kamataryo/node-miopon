@@ -6,7 +6,7 @@ oAuth  = miopon.oAuth
 Coupon = miopon.Coupon
 utility = miopon.utility
 
-alsoTestWebCases = true
+alsoTestWebCases = false
 describeWebCases = if alsoTestWebCases then describe else describe.skip
 
 
