@@ -110,7 +110,7 @@ CoffeeScriptでの例
             }
     }
 
-### 複雑なクーポン操作 ー X,Zをonにし、Yをoffにする
+### 複雑なクーポン操作
     miopon = require 'node-miopon'
     coupon = new miopon.Coupon
     utility = miopon.utility
@@ -119,6 +119,10 @@ CoffeeScriptでの例
     access_token = 'yyyyyyyyyyyyyyyyyyy'
 
     # hdoServiceCodeはinformメソッドなどで取得しておきます
+    # この例では、3つのクーポンを扱っています
+    # XとYはクーポンを共有しています
+    # Zは、XYとはクーポン共有していません
+    # XZをonにし、Yをoffにします
     query = utility.generateQuery [
         {
             'hdoXXXXXXXX': 'on'
