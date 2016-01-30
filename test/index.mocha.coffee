@@ -1,11 +1,10 @@
 expect = require('chai').expect
 _      = require 'underscore'
-miopon = require '../index'
+main   = '../' + require('../package.json').main
+miopon = require main
 oAuth  = miopon.oAuth
 Coupon = miopon.Coupon
 utility = miopon.utility
-
-
 
 describe 'The `oAuth` function', ->
 
