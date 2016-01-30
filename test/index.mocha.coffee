@@ -311,8 +311,8 @@ describe 'The module `utility`, \n', ->
 
                 describe 'works with unformatted codes will be eliminated:', ->
                     turnStatesCases = [
-                        null, undefined,'dummycode', 1, false, true
-                        [null], [undefined],['dummycode'], [1], [false], [true]
+                        null, undefined,'dummycode', 1, false, true, {}, []
+                        [null], [undefined],['dummycode'], [1], [false], [true], {}, []
                     ]
                     exact = couponInfo: []
                     _.each turnStatesCases, (turnStateCase) ->
