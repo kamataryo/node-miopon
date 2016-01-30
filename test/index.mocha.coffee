@@ -6,12 +6,16 @@ oAuth  = miopon.oAuth
 Coupon = miopon.Coupon
 utility = miopon.utility
 
+alsoTestWebCases = false
+describeWebCases = if alsoTestWebCases then describe else describe.skip
+
+
 describe 'The `oAuth` function', ->
 
     it '`oAuth` exists', ->
         expect(oAuth).is.a 'function'
 
-        describe 'oAuth fails wihout mioID, mioPass, client_id or redirect_uri:', ->
+        describeWebCases 'oAuth fails wihout mioID, mioPass, client_id or redirect_uri:', ->
             mioID = 'aaaa'
             mioPass = 'bbb'
             client_id = 'ccc'
@@ -83,7 +87,7 @@ describe 'The `Coupon` constructor, \n', ->
             expect(coupon.urls.coupon).to.be.an 'string'
 
 
-        describe 'inform fails wihout access_token or client_id:', ->
+        describeWebCases 'inform fails wihout access_token or client_id:', ->
             access_token = 'aaaa'
             client_id = 'bbb'
             args = [
@@ -113,7 +117,7 @@ describe 'The `Coupon` constructor, \n', ->
                 }
 
 
-        describe 'turn fails wihout access_token, client_id or query:', ->
+        describeWebCases 'turn fails wihout access_token, client_id or query:', ->
             access_token = 'aaaa'
             client_id = 'bbb'
             query = {query:''}
@@ -291,23 +295,133 @@ describe 'The module `utility`, \n', ->
                             expect(result).to.eql correct
 
 
-        describe '`generageQuery`', ->
+        describe '`generateQuery`', ->
 
-            it 'the utility has a method `generageQuery`', ->
-                expect(utility.generageQuery).is.a 'function'
+            it 'the utility has a method `generateQuery`', ->
+                expect(utility.generateQuery).is.a 'function'
 
 
             describe 'behaviors:', ->
 
-                it 'works with complex object', ->
-                    turnState = [
+
+                it 'works with no codes', ->
+                    turnStates = []
+                    exact = couponInfo: []
+                    expect(utility.generateQuery {turnStates}).to.eql exact
+
+                describe 'works with unformatted codes will be eliminated:', ->
+                    turnStatesCases = [
+                        null, undefined,'dummycode', 1, false, true
+                        [null], [undefined],['dummycode'], [1], [false], [true]
+                    ]
+                    exact = couponInfo: []
+                    _.each turnStatesCases, (turnStateCase) ->
+                        it "#{turnStateCase}", ->
+                            expect(utility.generateQuery {turnStates:turnStateCase}).to.eql exact
+
+
+                it 'works with single code', ->
+                    turnStates = [
                         {
                             'hdoWWWWWWWW':true
                         }
+                    ]
+                    exact =
+                        couponInfo: [
+                            {
+                                hdoInfo: [
+                                    {hdoServiceCode: 'hdoWWWWWWWW', couponUse: true }
+                                ]
+                            }
+                        ]
+                    expect(utility.generateQuery {turnStates}).to.eql exact
+
+                it 'works with single code and "on" statement', ->
+                    turnStates = [
+                        {
+                            'hdoWWWWWWWW':'on'
+                        }
+                    ]
+                    exact =
+                        couponInfo: [
+                            {
+                                hdoInfo: [
+                                    {hdoServiceCode: 'hdoWWWWWWWW', couponUse: true }
+                                ]
+                            }
+                        ]
+                    expect(utility.generateQuery {turnStates}).to.eql exact
+
+                it 'works with single code and "off" statement', ->
+                    turnStates = [
+                        {
+                            'hdoWWWWWWWW':'off'
+                        }
+                    ]
+                    exact =
+                        couponInfo: [
+                            {
+                                hdoInfo: [
+                                    {hdoServiceCode: 'hdoWWWWWWWW', couponUse: false }
+                                ]
+                            }
+                        ]
+                    expect(utility.generateQuery {turnStates}).to.eql exact
+
+                it 'works with several code', ->
+                    turnStates = [
+                        {
+                            'hdoWWWWWWWW':true
+                            'hdoYYYYYYYY':false
+                            'hdoZZZZZZZZ':true
+                        }
+                    ]
+                    exact =
+                        couponInfo: [
+                            {
+                                hdoInfo: [
+                                    {hdoServiceCode: 'hdoWWWWWWWW', couponUse: true }
+                                    {hdoServiceCode: 'hdoYYYYYYYY', couponUse: false }
+                                    {hdoServiceCode: 'hdoZZZZZZZZ', couponUse: true }
+                                ]
+                            }
+                        ]
+                    expect(utility.generateQuery {turnStates}).to.eql exact
+
+
+                it 'works with several coupon', ->
+                    turnStates = [
+                        {
+                            'hdoWWWWWWWW':false
+                        },
+                        {
+                            'hdoXXXXXXXX':true
+                        }
+                    ]
+                    exact =
+                        couponInfo: [
+                            {
+                                hdoInfo: [
+                                    {hdoServiceCode: 'hdoWWWWWWWW', couponUse: false }
+                                ]
+                            },
+                            {
+                                hdoInfo: [
+                                    {hdoServiceCode: 'hdoXXXXXXXX', couponUse: true }
+                                ]
+                            }
+                        ]
+                    expect(utility.generateQuery {turnStates}).to.eql exact
+
+                it 'works with complex object', ->
+                    turnStates = [
+                        {
+                            'hdoWWWWWWWW':true
+                        },
                         {
                             'hdoXXXXXXXX':false
                             'hdoYYYYYYYY':true
-                        }
+                        },
                         {
                             'hdoZZZZZZZZ':false
                             'hdoVVVVVVVV':true
@@ -320,22 +434,22 @@ describe 'The module `utility`, \n', ->
                                 hdoInfo: [
                                     {hdoServiceCode: 'hdoWWWWWWWW', couponUse: true }
                                 ]
-                            }
+                            },
                             {
                                 hdoInfo: [
                                     {hdoServiceCode: 'hdoXXXXXXXX', couponUse: false }
                                     {hdoServiceCode: 'hdoYYYYYYYY', couponUse: true }
                                 ]
-                            }
+                            },
                             {
                                 hdoInfo: [
                                     {hdoServiceCode: 'hdoZZZZZZZZ', couponUse: false }
                                     {hdoServiceCode: 'hdoVVVVVVVV', couponUse: true }
-                                    {hdoServiceCode: 'hdoUUUUUUUU', couponUse: true }
+                                    {hdoServiceCode: 'hdoUUUUUUUU', couponUse: false }
                                 ]
                             }
                         ]
-                    expect(generageQuery {turnState}).to.eql exact
+                    expect(utility.generateQuery {turnStates}).to.eql exact
 
 
         describe '`callback`', ->

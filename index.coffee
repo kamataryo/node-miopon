@@ -1,3 +1,5 @@
+_ = require 'underscore'
+
 endpoints =
     oAuth: 'https://api.iijmio.jp/mobile/d/v1/authorization/'
     coupon: 'https://api.iijmio.jp/mobile/d/v1/coupon/'
@@ -180,6 +182,20 @@ utility =
                     if each_couponInfo.hdoInfo.length > 0 then result.couponInfo.push each_couponInfo
         return result
 
+
+    generateQuery: ({turnStates}) =>
+        result = couponInfo: []
+        unless turnStates
+            return result
+        _.each turnStates, (couponStates) ->
+            if typeof couponStates is 'object'
+                tmp = hdoInfo: []
+                _.each couponStates, (couponUse, hdoServiceCode) ->
+                    couponUse = utility.orderCouponUse couponUse
+                    tmp.hdoInfo.push {hdoServiceCode, couponUse}
+                if tmp.hdoInfo.length > 0
+                    result.couponInfo.push tmp
+        return result
 
 
     # utility function for safe callback
