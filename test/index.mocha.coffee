@@ -75,10 +75,11 @@ describe 'The `Coupon` constructor, \n', ->
         it 'the instance coupon should have a method `turn`', ->
             expect(coupon.turn).is.a 'function'
 
-        # 後方互換のため残す。v2よりoAuthはCouponコンンストラクタ関数からutilityへ移動
+        # 後方互換のため残す。v2よりoAuthはCouponコンンストラクタ関数からprivateメンバへ移動
         it 'the instance coupon should have a string property `api.urls.oAuth`', ->
             expect(coupon.urls.oAuth).to.be.an 'string'
-        # 後方互換のため残す。v2よりoAuthはCouponコンンストラクタ関数からutilityへ移動
+
+        # 後方互換のため残す。v2よりoAuthはCouponコンンストラクタ関数からprivateメンバへ移動
         it 'the instance coupon should have a string property `api.urls.coupon`', ->
             expect(coupon.urls.coupon).to.be.an 'string'
 

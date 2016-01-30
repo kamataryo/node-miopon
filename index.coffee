@@ -1,5 +1,7 @@
 endpoints =
     oAuth: 'https://api.iijmio.jp/mobile/d/v1/authorization/'
+    coupon: 'https://api.iijmio.jp/mobile/d/v1/coupon/'
+
 
 
 oAuth = ({mioID, mioPass, client_id, redirect_uri, success, failure}) ->
@@ -126,7 +128,7 @@ class Coupon
     oAuth: oAuth
     urls:
         oAuth: endpoints.oAuth #'https://api.iijmio.jp/mobile/d/v1/authorization/'
-        coupon: 'https://api.iijmio.jp/mobile/d/v1/coupon/'
+        coupon: endpoints.coupon #'https://api.iijmio.jp/mobile/d/v1/coupon/'
 
 
 
