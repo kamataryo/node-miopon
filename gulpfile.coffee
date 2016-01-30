@@ -1,8 +1,6 @@
 gulp    = require 'gulp'
 plumber = require 'gulp-plumber'
 coffee  = require 'gulp-coffee'
-header  = require 'gulp-header'
-chmod   = require 'gulp-chmod'
 mocha   = require 'gulp-mocha'
 
 # build
@@ -15,7 +13,7 @@ gulp.task 'coffee', ->
         .pipe gulp.dest './'
 
 # test
-gulp.task 'mocha',['coffee'], ->
+gulp.task 'mocha',['build'], ->
     gulp.src [
         './test/index.mocha.coffee'
     ]

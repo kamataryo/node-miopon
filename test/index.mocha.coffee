@@ -1,37 +1,16 @@
 expect = require('chai').expect
 _      = require 'underscore'
 miopon = require '../index'
+oAuth  = miopon.oAuth
+Coupon = miopon.Coupon
+utility = miopon.utility
 
 
-describe 'The `Coupon` constructor, \n', ->
-    Coupon = null
-    before ->
-        Coupon = miopon.Coupon
 
-    it 'should exist.', ->
-        expect(Coupon).to.be.a.instanceof Function
+describe 'The `oAuth` function', ->
 
-
-    describe 'Test for the instance of `Coupon`. \n', ->
-        coupon = null
-        before ->
-            coupon = new Coupon()
-
-        it 'the instance coupon should have a method `oAuth`', ->
-            expect(coupon.oAuth).is.a 'function'
-
-        it 'the instance coupon should have a method `inform`', ->
-            expect(coupon.inform).is.a 'function'
-
-        it 'the instance coupon should have a method `turn`', ->
-            expect(coupon.turn).is.a 'function'
-
-        it 'the instance coupon should have a string property `api.urls.oAuth`', ->
-            expect(coupon.urls.oAuth).to.be.an 'string'
-
-        it 'the instance coupon should have a string property `api.urls.coupon`', ->
-            expect(coupon.urls.coupon).to.be.an 'string'
-
+    it '`oAuth` exists', ->
+        expect(oAuth).is.a 'function'
 
         describe 'oAuth fails wihout mioID, mioPass, client_id or redirect_uri:', ->
             mioID = 'aaaa'
@@ -48,7 +27,6 @@ describe 'The `Coupon` constructor, \n', ->
                 {mioID, mioPass, redirect_uri}
                 {mioID, client_id, redirect_uri}
                 {mioPass, client_id, redirect_uri}
-                {mioID, mioPass, client_id, redirect_uri}
             ]
             _.each args, (arg) ->
                 it arg.toString(), (done) ->
@@ -57,12 +35,11 @@ describe 'The `Coupon` constructor, \n', ->
                     arg.success = ->
                         expect(false).to.be.true
                         done()
-                    coupon.inform arg
-
+                    oAuth arg
 
             it 'oAuth even failes with nonsense arguments', (done) ->
                 this.timeout 50000
-                coupon.oAuth {
+                oAuth {
                     mioID
                     mioPass
                     client_id
@@ -73,6 +50,37 @@ describe 'The `Coupon` constructor, \n', ->
                     failure: ->
                         done()
                 }
+
+
+describe 'The `Coupon` constructor, \n', ->
+
+    it 'should exist.', ->
+        expect(Coupon).to.be.a.instanceof Function
+
+    describe 'Test for the instance of `Coupon`. \n', ->
+        coupon = null
+        before ->
+            coupon = new Coupon()
+
+        # 後方互換のため残す。v2よりoAuthはCouponコンンストラクタ関数から分離した
+        it 'the instance coupon should have a method `oAuth`', ->
+            expect(coupon.oAuth).is.a 'function'
+        # 互換チェック
+        it '`coupon.oAuth` referes miopon.oAuth', ->
+            expect(coupon.oAuth).to.equal miopon.oAuth
+
+        it 'the instance coupon should have a method `inform`', ->
+            expect(coupon.inform).is.a 'function'
+
+        it 'the instance coupon should have a method `turn`', ->
+            expect(coupon.turn).is.a 'function'
+
+        # 後方互換のため残す。v2よりoAuthはCouponコンンストラクタ関数からutilityへ移動
+        it 'the instance coupon should have a string property `api.urls.oAuth`', ->
+            expect(coupon.urls.oAuth).to.be.an 'string'
+        # 後方互換のため残す。v2よりoAuthはCouponコンンストラクタ関数からutilityへ移動
+        it 'the instance coupon should have a string property `api.urls.coupon`', ->
+            expect(coupon.urls.coupon).to.be.an 'string'
 
 
         describe 'inform fails wihout access_token or client_id:', ->
@@ -128,7 +136,7 @@ describe 'The `Coupon` constructor, \n', ->
 
             it 'turn even fails with nonsense access_token, client_id and query.', (done) ->
                 this.timeout 20000
-                coupon.inform {
+                coupon.turn {
                     client_id
                     access_token
                     query
@@ -141,9 +149,6 @@ describe 'The `Coupon` constructor, \n', ->
 
 
 describe 'The module `utility`, \n', ->
-    utility = null
-    before ->
-        utility = miopon.utility
 
     it 'should exist.', ->
         expect(utility).to.be.a.instanceof Object

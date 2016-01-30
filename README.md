@@ -19,11 +19,11 @@ oAuthとAPIへのアクセスをラップしています。
 `npm install node-miopon`
 
 ## APIs
-node-mioponモジュールは、コンストラクタ関数Couponとコンテナオブジェクトutilityをメンバに持ちます。
+node-mioponモジュールは、oAuthメソッド、コンストラクタ関数Coupon、コンテナオブジェクトutilityをメンバに持ちます。
 
-### coupon.oAuth
+### oAuth
 phantomjsでoAuthのやり取りを自動化します。
-- `coupon.oAuth` takes `{ mioID, mioPass, client_id, redirect_uri, success, failure }`.
+- `oAuth` takes `{ mioID, mioPass, client_id, redirect_uri, success, failure }`.
 - callback `success` will be called with `{client_id, access_token, expires_in}`.
 - callback `failure`  will be called with a `error object`.
 
@@ -52,9 +52,9 @@ informメソッドで得られたinformationオブジェクトを、turnメソ�
 CoffeeScriptでの例
 
 ### oAuthでaccess_tokenを取得
-    coupon = new require('node-miopon').Coupon
+    oAuth = require('node-miopon').oAuth
 
-    coupon.oAuth {
+    oAuth {
         mioID:     'aaaaaaaa'
         mioPass:   'bbbbbbbb'
         client_id: 'cccccccc' # デベロッパーID

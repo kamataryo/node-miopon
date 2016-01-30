@@ -1,72 +1,77 @@
+endpoints =
+    oAuth: 'https://api.iijmio.jp/mobile/d/v1/authorization/'
+
+
+oAuth = ({mioID, mioPass, client_id, redirect_uri, success, failure}) ->
+    callback = utility.callback
+    unless mioID && mioPass && client_id && redirect_uri
+        callback failure, {Error: 'no oAuth information'}
+        return
+
+    querystring  = require 'querystring'
+    phantom      = require 'phantom'
+    urlUtil      = require 'url'
+
+    csrf_token = require('crypto')
+        .randomBytes 10
+        .toString 'hex'
+
+    qs = querystring.stringify {
+        response_type: 'token'
+        client_id: client_id
+        redirect_uri: redirect_uri
+        state: csrf_token
+    }
+    url = "#{endpoints.oAuth}?#{qs}"
+    phantom.create (ph) ->
+        ph.createPage (page) ->
+            page.open url, (status) ->
+                console.log "page open: #{status}."
+                unless status is 'success'
+                    callback failure, {Error: 'page open failed'}
+                    ph.exit()
+                    return
+                else
+                    # phantomJS sandobox
+                    page.evaluate (mioID, mioPass) ->
+                        document.getElementById('username').value = mioID
+                        document.getElementById('password').value = mioPass
+                        document.getElementById('submit').click()
+                        # wait for dom change
+                        setTimeout ->
+                            document.getElementById('confirm').click()
+                        ,500
+                    , ->
+                        # wait for URL rewrite
+                        setTimeout ->
+                            page.evaluate ->
+                                return document.URL
+                            , (url) ->
+                                hash = urlUtil.parse(url).hash
+                                if hash
+                                    hash = hash.slice 1
+                                    result = querystring.parse(hash)
+                                    result.client_id = client_id
+                                    access_token = result.access_token
+                                    state = result.state
+                                    delete result.state
+                                    delete result.token_type
+                                    if access_token && state is csrf_token
+                                            callback success, result
+                                    else unless access_token
+                                        callback failure, {Error:'error occured, no access token found.'}
+                                else
+                                    callback failure, {Error:'error occured, no access token found.'}
+                                ph.exit()
+                        ,4000
+                    ,mioID
+                    ,mioPass
+
+
+
 # define Classes
 class Coupon
     'use strict'
-
-    oAuth: ({mioID, mioPass, client_id, redirect_uri, success, failure}) ->
-        callback = utility.callback
-        unless mioID && mioPass && client_id && redirect_uri
-            callback failure, {Error: 'no oAuth information'}
-            return
-
-        qsUtil  = require 'querystring'
-        phantom = require 'phantom'
-        urlUtil = require 'url'
-
-        csrf_token = require('crypto')
-            .randomBytes 10
-            .toString 'hex'
-
-        qs = qsUtil.stringify {
-            response_type: 'token'
-            client_id: client_id
-            redirect_uri: redirect_uri
-            state: csrf_token
-        }
-        url = "#{this.urls.oAuth}?#{qs}"
-        phantom.create (ph) ->
-            ph.createPage (page) ->
-                page.open url, (status) ->
-                    console.log "page open: #{status}."
-                    unless status is 'success'
-                        callback failure, {Error: 'page open failed'}
-                        ph.exit()
-                        return
-                    else
-                        # phantomJS sandobox
-                        page.evaluate (mioID, mioPass) ->
-                            document.getElementById('username').value = mioID
-                            document.getElementById('password').value = mioPass
-                            document.getElementById('submit').click()
-                            # wait for dom change
-                            setTimeout ->
-                                document.getElementById('confirm').click()
-                            ,500
-                        , ->
-                            # wait for URL rewrite
-                            setTimeout ->
-                                page.evaluate ->
-                                    return document.URL
-                                , (url) ->
-                                    hash = urlUtil.parse(url).hash
-                                    if hash
-                                        hash = hash.slice 1
-                                        result = qsUtil.parse(hash)
-                                        result.client_id = client_id
-                                        access_token = result.access_token
-                                        state = result.state
-                                        delete result.state
-                                        delete result.token_type
-                                        if access_token && state is csrf_token
-                                                callback success, result
-                                        else unless access_token
-                                            callback failure, {Error:'error occured, no access token found.'}
-                                    else
-                                        callback failure, {Error:'error occured, no access token found.'}
-                                    ph.exit()
-                            ,4000
-                        ,mioID
-                        ,mioPass
-
 
     # http request for coupon information
     inform: ({client_id, access_token, success, failure}) =>
@@ -117,9 +122,10 @@ class Coupon
                 callback failure, err
                 return
 
-
+    #後方互換のため残す
+    oAuth: oAuth
     urls:
-        oAuth: 'https://api.iijmio.jp/mobile/d/v1/authorization/'
+        oAuth: endpoints.oAuth #'https://api.iijmio.jp/mobile/d/v1/authorization/'
         coupon: 'https://api.iijmio.jp/mobile/d/v1/coupon/'
 
 
@@ -152,8 +158,8 @@ utility =
         unless information
             throw new Error 'no source option exception'
         _ = require 'underscore'
-        couponUse = this.utility.orderCouponUse couponUse
-        filter = this.utility.arraify filter
+        couponUse = utility.orderCouponUse couponUse
+        filter = utility.arraify filter
 
         # create clone object after traversing `information` object
         # eliminate parental object without certain property
@@ -184,5 +190,4 @@ utility =
             return false
 
 
-module.exports.Coupon = Coupon
-module.exports.utility = utility
+module.exports = {oAuth,Coupon,utility}
