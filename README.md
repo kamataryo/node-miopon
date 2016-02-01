@@ -14,8 +14,8 @@ oAuthとAPIへのアクセスをラップしています。
 [IIJmioクーポンスイッチAPIのご利用に当たって(IIJmioのサイト)](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp#goriyou)
 
 ## example
-[<img src="https://raw.githubusercontent.com/KamataRyo/node-miopon-cli/master/icon/icon.png" width="30" alt="アイコン">
-[node-miopon-cli](https://www.npmjs.com/package/node-miopon-cli)](https://www.npmjs.com/package/node-miopon-cli)
+<img src="https://raw.githubusercontent.com/KamataRyo/node-miopon-cli/master/icon/icon.png" width="30" alt="アイコン">
+[node-miopon-cli](https://www.npmjs.com/package/node-miopon-cli)
 
 ## install
 `npm install node-miopon`
