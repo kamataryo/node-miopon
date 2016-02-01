@@ -13,7 +13,7 @@ oAuthとAPIへのアクセスをラップしています。
 実行にはデベロッパーIDとリダイレクトURIの指定が必要です。これらは公式サイトに従って登録してください。
 [IIJmioクーポンスイッチAPIのご利用に当たって(IIJmioのサイト)](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp#goriyou)
 
-## example
+## 実装
 <img src="https://raw.githubusercontent.com/KamataRyo/node-miopon-cli/master/icon/icon.png" width="30" alt="アイコン">
 [node-miopon-cli](https://www.npmjs.com/package/node-miopon-cli)
 
