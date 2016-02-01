@@ -1,7 +1,6 @@
 # node-miopon
 
-[<img src="icon/icon.png" width="60" alt="アイコン">](https://www.npmjs.com/package/node-miopon
-)
+[<img src="icon/icon.png" width="60" alt="アイコン">](https://www.npmjs.com/package/node-miopon)
 
 [![Build Status](https://travis-ci.org/KamataRyo/node-miopon.svg?branch=master)](https://travis-ci.org/KamataRyo/node-miopon)
 [![npm version](https://badge.fury.io/js/node-miopon.svg)](https://badge.fury.io/js/node-miopon)
@@ -14,6 +13,9 @@ oAuthとAPIへのアクセスをラップしています。
 実行にはデベロッパーIDとリダイレクトURIの指定が必要です。これらは公式サイトに従って登録してください。
 [IIJmioクーポンスイッチAPIのご利用に当たって(IIJmioのサイト)](https://www.iijmio.jp/hdd/coupon/mioponapi.jsp#goriyou)
 
+## example
+[<img src="https://raw.githubusercontent.com/KamataRyo/node-miopon-cli/master/icon/icon.png" width="30" alt="アイコン">
+[node-miopon-cli](https://www.npmjs.com/package/node-miopon-cli)](https://www.npmjs.com/package/node-miopon-cli)
 
 ## install
 `npm install node-miopon`
@@ -121,7 +123,7 @@ CoffeeScriptでの例
     # hdoServiceCodeはinformメソッドなどで取得しておきます
     # この例では、3つのクーポンを扱っています
     # XとYはクーポンを共有しています
-    # Zは、XYとはクーポン共有していません
+    # Zは、XYとはクーポンを共有していません
     # XZをonにし、Yをoffにします
     query = utility.generateQuery [
         {
