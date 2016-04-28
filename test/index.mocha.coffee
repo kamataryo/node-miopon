@@ -1,4 +1,5 @@
 expect = require('chai').expect
+nock   = require 'nock'
 _      = require 'underscore'
 main   = '../' + require('../package.json').main
 miopon = require main
@@ -8,6 +9,30 @@ utility = miopon.utility
 
 alsoTestWebCases = false
 describeWebCases = if alsoTestWebCases then describe else describe.skip
+
+# describe 'test of nock', ->
+#     it 'test of test', (done)->
+#         this.timeout 50000
+#         mioID = 'aaaa'
+#         mioPass = 'bbb'
+#         client_id = 'ccc'
+#         redirect_uri = 'ddd'
+#         scope = nock miopon.endpoints.oAuth
+#         oAuth {
+#             mioID
+#             mioPass
+#             client_id
+#             redirect_uri
+#             success: ->
+#                 console.log 'success'
+#                 done()
+#             failure: ->
+#                 console.log 'failure'
+#                 done()
+#         }
+#
+# return
+
 
 
 describe 'The `oAuth` function', ->
@@ -40,7 +65,7 @@ describe 'The `oAuth` function', ->
                         done()
                     oAuth arg
 
-            it 'oAuth even failes with nonsense arguments', (done) ->
+            it 'oAuth even failes with a nonsense set of arguments', (done) ->
                 this.timeout 50000
                 oAuth {
                     mioID

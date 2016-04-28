@@ -1,8 +1,15 @@
 _ = require 'underscore'
 
 endpoints =
-    oAuth: 'https://api.iijmio.jp/mobile/d/v1/authorization/'
-    coupon: 'https://api.iijmio.jp/mobile/d/v1/coupon/'
+    url: 'https://api.iijmio.jp'
+    path:
+        oAuth: '/mobile/d/v1/authorization/'
+        coupon: '/mobile/d/v1/coupon/'
+    oAuth: (qs)->
+        return "#{endpoints.oAuth}?#{qs}"
+
+    # oAuth: 'https://api.iijmio.jp/mobile/d/v1/authorization/'
+    # coupon: 'https://api.iijmio.jp/mobile/d/v1/coupon/'
 
 
 
@@ -208,4 +215,4 @@ utility =
             return false
 
 
-module.exports = {oAuth,Coupon,utility}
+module.exports = {oAuth,Coupon,utility,endpoints}
